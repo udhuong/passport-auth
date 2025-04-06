@@ -1,0 +1,33 @@
+{
+  "name": "udhuong/passport-auth",
+  "version": "1.0.0",
+  "description": "Laravel Passport Auth reusable package",
+  "type": "library",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "PC",
+      "email": "email@example.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Udhuong\\PassportAuth\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.3",
+    "laravel/framework": "^11.0|^12.0",
+    "laravel/passport": "^12.4",
+    "laravel/socialite": "^5.19",
+    "udhuong/laravel-common": "^1.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Udhuong\\PassportAuth\\PassportAuthServiceProvider"
+      ]
+    }
+  }
+}
