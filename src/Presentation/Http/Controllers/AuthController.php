@@ -84,6 +84,10 @@ class AuthController extends Controller
     public function logout(Request $request): JsonResponse
     {
         $token = $request->user()->token();
+        if (!$token) {
+            return Responder::fail('Không tìm thấy token');
+        }
+
         $token->revoke();
         $this->authRepository->revokedToken($token->id);
 

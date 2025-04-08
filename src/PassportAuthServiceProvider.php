@@ -2,10 +2,14 @@
 
 namespace Udhuong\PassportAuth;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
+use League\OAuth2\Server\AuthorizationServer;
 use Udhuong\PassportAuth\Domain\Contracts\AuthRepository;
 use Udhuong\PassportAuth\Domain\Contracts\SocialAccountRepository;
 use Udhuong\PassportAuth\Domain\Contracts\UserModel;
+use Udhuong\PassportAuth\Domain\Validate\CustomClientCredentialsGrant;
 use Udhuong\PassportAuth\Infrastructure\Repositories\AuthRepositoryImpl;
 use Udhuong\PassportAuth\Infrastructure\Repositories\SocialAccountRepositoryImpl;
 
@@ -33,11 +37,28 @@ class PassportAuthServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/passport_auth.php' => config_path('passport_auth.php'),
         ], 'passport-auth-config');
+
+        $this->customPassport();
     }
 
     private function registerRepository(): void
     {
         $this->app->bind(AuthRepository::class, AuthRepositoryImpl::class);
         $this->app->bind(SocialAccountRepository::class, SocialAccountRepositoryImpl::class);
+    }
+
+    private function customPassport(): void
+    {
+        Passport::enablePasswordGrant();
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+
+        if (Schema::hasTable('oauth_scopes')) {
+            $scopes = \DB::table('oauth_scopes')->pluck('id', 'scope')->toArray();
+        } else {
+            $scopes = [];
+        }
+        Passport::tokensCan($scopes); //Cần tối ưu lại
     }
 }

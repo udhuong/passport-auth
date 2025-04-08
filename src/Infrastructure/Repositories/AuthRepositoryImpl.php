@@ -96,4 +96,18 @@ class AuthRepositoryImpl implements AuthRepository
         }
         return $user->createToken('access_token')->accessToken;
     }
+
+    /**
+     * Lấy danh sách các scopes của client theo client_id.
+     * @param int $clientId
+     * @return array
+     */
+    public function getScopesByClientId(int $clientId): array
+    {
+        return DB::table('oauth_client_scopes')
+            ->join('oauth_scopes', 'oauth_client_scopes.scope_id', '=', 'oauth_scopes.id')
+            ->where('oauth_client_scopes.client_id', $clientId)
+            ->pluck('oauth_scopes.scope')
+            ->toArray();
+    }
 }

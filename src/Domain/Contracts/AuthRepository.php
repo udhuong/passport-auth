@@ -11,4 +11,5 @@ interface AuthRepository
     public function getUserByUserId(int $userId): ?AuthUser;
     public function createUserGetId(string $email, string $name, string $password): int;
     public function getTokenByEmail(string $email): ?string;
+    public function getScopesByClientId(int $clientId): array;
 }
