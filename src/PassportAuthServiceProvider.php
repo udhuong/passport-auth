@@ -5,11 +5,9 @@ namespace Udhuong\PassportAuth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
-use League\OAuth2\Server\AuthorizationServer;
 use Udhuong\PassportAuth\Domain\Contracts\AuthRepository;
 use Udhuong\PassportAuth\Domain\Contracts\SocialAccountRepository;
 use Udhuong\PassportAuth\Domain\Contracts\UserModel;
-use Udhuong\PassportAuth\Domain\Validate\CustomClientCredentialsGrant;
 use Udhuong\PassportAuth\Infrastructure\Repositories\AuthRepositoryImpl;
 use Udhuong\PassportAuth\Infrastructure\Repositories\SocialAccountRepositoryImpl;
 
