@@ -10,5 +10,7 @@ class AuthUser
 
     public string $email;
 
+    public string $password;
+
     public Token $token;
 }

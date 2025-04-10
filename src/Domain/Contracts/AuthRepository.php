@@ -6,6 +6,8 @@ use Udhuong\PassportAuth\Domain\Entities\AuthUser;
 
 interface AuthRepository
 {
+    public function createUser(AuthUser $user): int;
+
     public function revokedToken(string $tokenId): void;
 
     public function getUserByEmail(string $email): ?AuthUser;

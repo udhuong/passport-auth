@@ -10,6 +10,18 @@ use Udhuong\PassportAuth\Domain\Entities\AuthUser;
 class AuthRepositoryImpl implements AuthRepository
 {
     /**
+     * Tạo người dùng mới và trả về ID của người dùng đó.
+     */
+    public function createUser(AuthUser $user): int
+    {
+        return DB::table('users')->insertGetId([
+            'email' => $user->email,
+            'name' => $user->name,
+            'password' => $user->password,
+        ]);
+    }
+
+    /**
      * Revoked the token by ID.
      */
     public function revokedToken(string $tokenId): void
