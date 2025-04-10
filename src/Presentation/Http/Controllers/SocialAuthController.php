@@ -16,14 +16,10 @@ class SocialAuthController extends Controller
 {
     public function __construct(
         private readonly UpsertSocialAccountAction $upsertSocialUserAction
-    ) {
-    }
+    ) {}
 
     /**
      * Chuyển hướng đăng nhập qua provider
-     *
-     * @param $provider
-     * @return mixed
      */
     public function redirect($provider): mixed
     {
@@ -33,14 +29,12 @@ class SocialAuthController extends Controller
     /**
      * Đăng nhập qua provider
      *
-     * @param $provider
-     * @return JsonResponse
      * @throws AppException
      */
     public function callback($provider): JsonResponse
     {
         $providerEnum = SocialProvider::tryFrom($provider);
-        if(!$providerEnum) {
+        if (! $providerEnum) {
             throw new AppException('Provider không hợp lệ', 400);
         }
 

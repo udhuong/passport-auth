@@ -14,20 +14,18 @@ class ClientCredentialController
 {
     public function __construct(
         private readonly ClientGetTokenAction $clientGetTokenAction
-    ) {
-    }
+    ) {}
 
     /**
      * Client lấy token để server gọi server
      *
-     * @param ClientGetTokenRequest $request
-     * @return JsonResponse
      * @throws ConnectionException
      * @throws AppException
      */
     public function getToken(ClientGetTokenRequest $request): JsonResponse
     {
         $token = $this->clientGetTokenAction->handle($request->toDto());
+
         return Responder::success(
             GetTokenResponse::format($token),
             'Đăng nhập thành công'

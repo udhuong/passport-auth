@@ -26,20 +26,17 @@ class AuthController extends Controller
         private readonly LoginAction $loginAction,
         private readonly RefreshTokenAction $refreshTokenAction,
         private readonly AuthRepository $authRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Đăng ký tài khoản
-     *
-     * @param RegisterRequest $request
-     * @return JsonResponse
      */
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = $this->registerAction->handle($request->toDto());
+
         return Responder::success([
-            'user_id' => $user
+            'user_id' => $user,
         ], 'Tạo tài khoản thành công');
     }
 
@@ -52,6 +49,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         $token = $this->loginAction->handle($request->toDto());
+
         return Responder::success(
             LoginResponse::format($token),
             'Đăng nhập thành công'
@@ -61,14 +59,13 @@ class AuthController extends Controller
     /**
      * Refresh token
      *
-     * @param RefreshTokenRequest $request
-     * @return JsonResponse
      * @throws AppException
      * @throws ConnectionException
      */
     public function refreshToken(RefreshTokenRequest $request): JsonResponse
     {
         $token = $this->refreshTokenAction->handle($request->get('refresh_token'));
+
         return Responder::success(
             LoginResponse::format($token),
             'Lấy token mới thành công'
@@ -77,14 +74,11 @@ class AuthController extends Controller
 
     /**
      * Đăng xuất tài khoản
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function logout(Request $request): JsonResponse
     {
         $token = $request->user()->token();
-        if (!$token) {
+        if (! $token) {
             return Responder::fail('Không tìm thấy token');
         }
 
@@ -96,13 +90,10 @@ class AuthController extends Controller
 
     /**
      * Lấy thông tin người dùng đã đăng nhập
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function getUserLogged(Request $request): JsonResponse
     {
-        $authUser = new AuthUser();
+        $authUser = new AuthUser;
         $authUser->userId = $request->user()->id;
         $authUser->email = $request->user()->email;
         $authUser->name = $request->user()->name;

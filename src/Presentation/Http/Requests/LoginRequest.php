@@ -17,9 +17,10 @@ class LoginRequest extends ApiRequest
 
     public function toDto(): LoginDTO
     {
-        $dto = new LoginDTO();
+        $dto = new LoginDTO;
         $dto->email = $this->input('email');
         $dto->password = $this->input('password');
+
         return $dto;
     }
 }

@@ -18,10 +18,11 @@ class RegisterRequest extends ApiRequest
 
     public function toDto(): RegisterDTO
     {
-        $dto = new RegisterDTO();
+        $dto = new RegisterDTO;
         $dto->name = $this->input('name');
         $dto->email = $this->input('email');
         $dto->password = $this->input('password');
+
         return $dto;
     }
 }

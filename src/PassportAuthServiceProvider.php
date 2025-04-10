@@ -15,7 +15,7 @@ class PassportAuthServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/passport_auth.php', 'passport_auth');
+        $this->mergeConfigFrom(__DIR__.'/../config/passport_auth.php', 'passport_auth');
     }
 
     public function boot(): void
@@ -26,14 +26,14 @@ class PassportAuthServiceProvider extends ServiceProvider
             return $app->make(config('passport_auth.user_model'));
         });
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         // Nếu cần publish config cho project sử dụng
         // php artisan vendor:publish --tag=passport-auth-config
         $this->publishes([
-            __DIR__ . '/../config/passport_auth.php' => config_path('passport_auth.php'),
+            __DIR__.'/../config/passport_auth.php' => config_path('passport_auth.php'),
         ], 'passport-auth-config');
 
         $this->customPassport();
@@ -57,6 +57,6 @@ class PassportAuthServiceProvider extends ServiceProvider
         } else {
             $scopes = [];
         }
-        Passport::tokensCan($scopes); //Cần tối ưu lại
+        Passport::tokensCan($scopes); // Cần tối ưu lại
     }
 }

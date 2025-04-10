@@ -14,13 +14,10 @@ class UpsertSocialAccountAction
     public function __construct(
         private readonly SocialAccountRepository $socialAccountRepository,
         private readonly AuthRepository $authRepository,
-    ) {
-    }
+    ) {}
 
     /**
      * Đăng nhập hoặc đăng ký người dùng với tài khoản mạng xã hội.
-     * @param SocialAccount $socialAccount
-     * @return AuthUser
      */
     public function handle(SocialAccount $socialAccount): AuthUser
     {
@@ -32,7 +29,7 @@ class UpsertSocialAccountAction
 
         // Kiểm tra xem user đã tồn tại trong hệ thống chưa
         $authUser = $this->authRepository->getUserByEmail($socialAccount->email);
-        if (!$authUser) {
+        if (! $authUser) {
             $userId = $this->authRepository->createUserGetId(
                 $socialAccount->email,
                 $socialAccount->name,
@@ -42,14 +39,15 @@ class UpsertSocialAccountAction
         }
 
         // Nếu người dùng chưa đăng nhập với provider nào
-        if (!$socialAccountExist) {
+        if (! $socialAccountExist) {
             $socialAccount->userId = $authUser->userId;
             $this->socialAccountRepository->create($socialAccount);
         }
 
-        $token = new Token();
+        $token = new Token;
         $token->accessToken = $this->authRepository->getTokenByEmail($socialAccount->email);
         $authUser->token = $token;
+
         return $authUser;
     }
 }

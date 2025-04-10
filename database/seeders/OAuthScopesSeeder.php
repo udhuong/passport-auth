@@ -73,14 +73,14 @@ class OAuthScopesSeeder extends Seeder
             [
                 'resource' => 'team_a',
                 'scope' => 'team_a:service_a.user.write',
-            ]
+            ],
         ]);
 
         \DB::table('oauth_scopes')->insert([
             [
                 'client_id' => 3,
                 'scope_id' => 1,
-            ]
+            ],
         ]);
     }
 }

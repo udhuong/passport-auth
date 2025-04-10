@@ -9,11 +9,6 @@ use Udhuong\PassportAuth\Infrastructure\Models\SocialAccountModel;
 
 class SocialAccountRepositoryImpl implements SocialAccountRepository
 {
-    /**
-     * @param int|string $providerId
-     * @param string $providerName
-     * @return SocialAccount|null
-     */
     public function findByProviderId(int|string $providerId, string $providerName): ?SocialAccount
     {
         $data = SocialAccountModel::query()
@@ -24,7 +19,7 @@ class SocialAccountRepositoryImpl implements SocialAccountRepository
             return null;
         }
 
-        $socialAccount = new SocialAccount();
+        $socialAccount = new SocialAccount;
         $socialAccount->userId = $data->user_id;
         $socialAccount->providerId = $data->provider_id;
         $socialAccount->provider = SocialProvider::tryFrom($providerName);
@@ -32,10 +27,6 @@ class SocialAccountRepositoryImpl implements SocialAccountRepository
         return $socialAccount;
     }
 
-    /**
-     * @param SocialAccount $account
-     * @return void
-     */
     public function create(SocialAccount $account): void
     {
         SocialAccountModel::create([

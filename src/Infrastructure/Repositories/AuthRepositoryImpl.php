@@ -11,8 +11,6 @@ class AuthRepositoryImpl implements AuthRepository
 {
     /**
      * Revoked the token by ID.
-     * @param string $tokenId
-     * @return void
      */
     public function revokedToken(string $tokenId): void
     {
@@ -23,8 +21,6 @@ class AuthRepositoryImpl implements AuthRepository
 
     /**
      * Lấy thông tin người dùng theo email.
-     * @param string $email
-     * @return AuthUser|null
      */
     public function getUserByEmail(string $email): ?AuthUser
     {
@@ -36,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository
             return null;
         }
 
-        $user = new AuthUser();
+        $user = new AuthUser;
         $user->userId = $data->id;
         $user->name = $data->name;
         $user->email = $data->email;
@@ -46,8 +42,6 @@ class AuthRepositoryImpl implements AuthRepository
 
     /**
      * Lấy thông tin người dùng theo id.
-     * @param int $userId
-     * @return AuthUser|null
      */
     public function getUserByUserId(int $userId): ?AuthUser
     {
@@ -59,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository
             return null;
         }
 
-        $user = new AuthUser();
+        $user = new AuthUser;
         $user->userId = $data->id;
         $user->name = $data->name;
         $user->email = $data->email;
@@ -69,10 +63,6 @@ class AuthRepositoryImpl implements AuthRepository
 
     /**
      * Tạo người dùng mới và trả về ID của người dùng đó.
-     * @param string $email
-     * @param string $name
-     * @param string $password
-     * @return int
      */
     public function createUserGetId(string $email, string $name, string $password): int
     {
@@ -85,8 +75,6 @@ class AuthRepositoryImpl implements AuthRepository
 
     /**
      * Lấy token của người dùng theo email.
-     * @param string $email
-     * @return string|null
      */
     public function getTokenByEmail(string $email): ?string
     {
@@ -94,13 +82,12 @@ class AuthRepositoryImpl implements AuthRepository
         if (empty($user)) {
             return null;
         }
+
         return $user->createToken('access_token')->accessToken;
     }
 
     /**
      * Lấy danh sách các scopes của client theo client_id.
-     * @param int $clientId
-     * @return array
      */
     public function getScopesByClientId(int $clientId): array
     {

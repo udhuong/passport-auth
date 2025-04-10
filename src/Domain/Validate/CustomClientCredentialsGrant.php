@@ -12,8 +12,6 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
     /**
      * Custom lại validate thêm scope
      *
-     * @param $request
-     * @return ClientEntityInterface
      * @throws OAuthServerException
      */
     public function validateClient($request): ClientEntityInterface
@@ -21,7 +19,7 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
         $client = parent::validateClient($request);
         // Lấy scope từ request
         $scopes = $request->getParsedBody()['scope'] ?? '';
-        if (!$scopes) {
+        if (! $scopes) {
             return $client;
         }
 
@@ -32,14 +30,14 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
             $requestedScopes = $scopes;
         }
 
-        if (!$requestedScopes) {
+        if (! $requestedScopes) {
             return $client;
         }
 
         // Kiểm tra scope có thuộc client này không
         $clientScopes = app(AuthRepository::class)->getScopesByClientId($client->getIdentifier());
         foreach ($requestedScopes as $scope) {
-            if (!in_array($scope, $clientScopes, true)) {
+            if (! in_array($scope, $clientScopes, true)) {
                 throw OAuthServerException::invalidScope($scope);
             }
         }
